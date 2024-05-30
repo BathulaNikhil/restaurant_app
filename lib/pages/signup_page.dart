@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+
 import '../components/inputField.dart';
-import 'package:restaurant_app/components/my_button.dart';
+import '../components/my_button.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUp extends StatefulWidget {
   final void Function()? onTap;
-
-  const LoginPage({super.key, required this.onTap});
+  const SignUp({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUp> {
   //text editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 25),
 
             // message, app slogan
-            Text('Food Delivery App',
+            Text("Let's create an account for you",
                 style: TextStyle(
                   fontSize: 16,
                   color: Theme.of(context).colorScheme.inversePrimary,
@@ -57,12 +58,21 @@ class _LoginPageState extends State<LoginPage> {
               hintText: 'Password',
               obscureText: true,
             ),
+            
+            const SizedBox(height: 10),
+            
+            // confirm password textfield
+            InputField(
+              controller: confirmPasswordController,
+              hintText: 'Confirm password',
+              obscureText: false,
+            ),
 
             const SizedBox(height: 25),
 
             // sign in button
             MyButton(
-              text: 'Sign In',
+              text: 'Sign Up',
               onTap: () {
                 // Navigator.pushNamed(context, '/home');
               },
@@ -72,12 +82,12 @@ class _LoginPageState extends State<LoginPage> {
               height: 25,
             ),
 
-            // not a member? register now
+            // already have an account? Login here
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Not a member?',
+                  'Already have an account?',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.inversePrimary,
                   ),
@@ -86,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                 GestureDetector(
                   onTap: widget.onTap,
                   child: Text(
-                    'Register now',
+                    'Login now',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.bold,

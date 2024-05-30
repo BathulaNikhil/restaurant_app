@@ -17,8 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(
+        onTap: () {},
+      ),
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: const LoginPage(),
     );
   }
 }
