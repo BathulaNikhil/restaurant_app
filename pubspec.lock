@@ -34,13 +34,21 @@ packages:
     source: hosted
     version: "1.1.1"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       sha256: cfc915e6923fe5ce6e153b0723c753045de46de1b4d63771530504004a45fae0
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
+  credit_card:
+    dependency: "direct main"
+    description:
+      name: credit_card
+      sha256: f01a40340c1971cbcc995f03fe14d12d41e1f404919aa4043855cb75223e3c3a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.8"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -75,6 +83,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.1"
   js:
     dependency: transitive
     description:

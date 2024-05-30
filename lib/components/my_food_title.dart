@@ -32,6 +32,8 @@ class FoodTitle extends StatelessWidget {
                   ),
                 ],
               )),
+              const SizedBox(width: 15), // SizedBox(width
+
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
@@ -41,6 +43,11 @@ class FoodTitle extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        Divider(
+          color: Theme.of(context).colorScheme.tertiary,
+          endIndent: 25,
+          indent: 25,
         )
       ],
     );

@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/food.dart';
+import '../models/cart_item.dart';
 
 class Restraurant extends ChangeNotifier {
   final List<Food> _menu = [
@@ -373,4 +376,117 @@ class Restraurant extends ChangeNotifier {
 
   // Getters
   List<Food> get menu => _menu;
+
+  List<CartItem> get cart => _cart;
+
+  final List<CartItem> _cart = [];
+
+  // add to Cart
+  void addToCart(Food food, List<AddOn> selectedAddons) {
+    CartItem? carItem = _cart.firstWhereOrNull((item) {
+      bool isSameFood = item.food == food;
+
+      bool isSameAddOns = ListEquality().equals(
+        item.selectedAddOns,
+        selectedAddons,
+      );
+      return isSameFood && isSameAddOns;
+    });
+
+    if (carItem != null) {
+      carItem.quantity++;
+    } else {
+      _cart.add(CartItem(food: food, selectedAddOns: selectedAddons));
+      notifyListeners();
+    }
+  }
+
+  // remove the cart
+
+  void removeFromCart(CartItem cartItem) {
+    int cardIndex = _cart.indexOf(cartItem);
+
+    if (cardIndex != 1) {
+      if (_cart[cardIndex].quantity > 1) {
+        _cart[cardIndex].quantity--;
+      } else {
+        _cart.removeAt(cardIndex);
+      }
+    }
+    notifyListeners();
+  }
+
+  // get total price
+
+  double getTotalPrice() {
+    double totalPrice = 0.0;
+    for (CartItem cartItem in _cart) {
+      double itemTotal = cartItem.food.price;
+
+      for (AddOn addOn in cartItem.selectedAddOns) {
+        itemTotal += addOn.price;
+      }
+
+      totalPrice += itemTotal * cartItem.quantity;
+    }
+
+    return totalPrice;
+  }
+
+  // get total number of items in the cart
+
+  int getTotalItemCount() {
+    int totalCount = 0;
+
+    for (CartItem cartItem in _cart) {
+      totalCount += cartItem.quantity;
+    }
+
+    return totalCount;
+  }
+
+  void clear() {
+    _cart.clear();
+    notifyListeners();
+  }
+
+  String displayCartReceipt() {
+    final receipt = StringBuffer();
+    receipt.writeln('Order Summary');
+    receipt.writeln();
+
+    String formattedDate =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+    receipt.writeln(formattedDate);
+
+    receipt.writeln();
+
+    receipt.writeln('-------------------------');
+
+    for (final cartItem in _cart) {
+      receipt.writeln('${cartItem.food.name} x ${cartItem.quantity}');
+      receipt.writeln('  ${_formattedPrice(cartItem.food.price)}');
+
+      if (cartItem.selectedAddOns.isNotEmpty) {
+        receipt.writeln('AddOns: ${_formatAddOns(cartItem.selectedAddOns)}');
+      }
+
+      receipt.writeln('-------------');
+      receipt.writeln();
+      receipt.writeln('Total Items: ${getTotalItemCount()}');
+      receipt.writeln('Total Price: ${_formattedPrice(getTotalPrice())}');
+    }
+    return receipt.toString();
+  }
+
+  String _formattedPrice(double price) {
+    return '\$${price.toStringAsFixed(2)}';
+  }
+
+  String _formatAddOns(List<AddOn> addOns) {
+    return addOns
+        .map((addOn) => '${addOn.name} (${_formattedPrice(addOn.price)})')
+        .join(', ');
+  }
 }
