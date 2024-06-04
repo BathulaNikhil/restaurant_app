@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../components/inputField.dart';
 import 'package:restaurant_app/components/my_button.dart';
 
+import 'home_page.dart';
+
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
 
@@ -15,6 +17,16 @@ class _LoginPageState extends State<LoginPage> {
   //text editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  // login method
+  void login() {
+    /*
+    
+    */
+
+  //navigate to home page
+  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+  }
 
   @override
   Widget build(BuildContext context) {
